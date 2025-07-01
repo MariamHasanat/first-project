@@ -16,10 +16,12 @@ class Student extends Model
 
     protected $guarded = ['id'];
 
+
+
     // Define any relationships if needed
     // For example, if a student has many courses:
-    // public function courses()
-    // {
-    //     return $this->hasMany(Course::class);
-    // }
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_student', 'student_id', 'course_id');
+    }
 }

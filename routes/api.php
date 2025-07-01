@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,3 +14,7 @@ Route::post('students/store', [StudentController::class, 'store']);
 Route::get('students/{id}', [StudentController::class, 'show']);
 Route::put('students/{id}', [StudentController::class, 'update']);
 Route::delete('students/{id}', [StudentController::class, 'destroy']);
+
+Route::post('courses', [CourseController::class, 'store']);
+Route::get('courses', [CourseController::class, 'index']);
+Route::put('courses/{id}', [CourseController::class, 'enrollStudent']);

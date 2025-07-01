@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StudentResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,8 +19,10 @@ class StudentController extends Controller
         // Logic to display a list of students
         // This could involve fetching students from the database and returning a view
         // For example:
-        $students = Student::all();
-        return response()->json($students);
+
+        $students = Student::with('courses')->get();
+
+        return response()->json(StudentResource::collection($students), 200);
     }
 
     /**
