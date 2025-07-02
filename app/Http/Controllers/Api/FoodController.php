@@ -20,7 +20,7 @@ class FoodController extends Controller
         if ($foods->isEmpty()) {
             return response()->json(['message' => 'No foods found'], 404);
         }
-        return response()->json(FoodResource::collection($foods->load('components')));
+        return response()->json(FoodResource::collection($foods));
     }
 
     /**
@@ -33,7 +33,7 @@ class FoodController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'image' => 'nullable|string',
-
+            'ingredients' => 'nullable|array',
         ]);
 
         if ($validator->fails()) {
@@ -45,7 +45,7 @@ class FoodController extends Controller
 
         $food = Food::create($validator->validated());
 
-        return response()->json(FoodResource::make($food->load('components')), 201);
+        return response()->json(FoodResource::make($food), 201);
     }
 
     /**
@@ -53,7 +53,10 @@ class FoodController extends Controller
      */
     public function show(string $id)
     {
-        $food = Food::with('component')->findOrFail($id);
+        $food = Food::find($id);
+        if (is_null($food)) {
+            return response()->json(['message' => 'Food not found']);
+        }
         return FoodResource::make($food);
     }
 
@@ -62,13 +65,16 @@ class FoodController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $food = Food::findOrFail($id);
+        $food = Food::find($id);
+        if (is_null($food)) {
+            return response()->json(['message' => 'Food not found']);
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'image' => 'nullable|string',
-
+            'ingredients' => 'nullable|array',
         ]);
 
         if ($validator->fails()) {
@@ -78,7 +84,7 @@ class FoodController extends Controller
             ], 422);
         }
         $food->update($validator->validated());
-        return response()->json(FoodResource::make($food->fresh('components')));
+        return response()->json(FoodResource::make($food));
     }
 
     /**
@@ -86,7 +92,10 @@ class FoodController extends Controller
      */
     public function destroy(string $id)
     {
-        $food = Food::findOrFail($id);
+        $food = Food::find($id);
+        if (is_null($food)) {
+            return response()->json(['message' => 'Food not found']);
+        }
         $food->delete();
         return response()->json(['message' => 'Food deleted']);
     }

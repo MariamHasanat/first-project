@@ -30,6 +30,6 @@ Route::post('foods', [FoodController::class, 'store']);
 Route::put('foods/{id}', [FoodController::class, 'update']);
 Route::delete('foods/{id}', [FoodController::class, 'destroy']);
 
-Route::apiResource('components', ComponentController::class);
-Route::apiResource('orders', OrderController::class);
-Route::apiResource('categories', CategoryController::class);
+// Route::apiResource('components', ComponentController::class);
+// Route::apiResource('orders', OrderController::class);
+// Route::apiResource('categories', CategoryController::class);

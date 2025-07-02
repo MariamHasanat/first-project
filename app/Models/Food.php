@@ -13,15 +13,20 @@ class Food extends Model
         'description',
         'price',
         'image',
+        'ingredients', // Assuming ingredients is a JSON field
     ];
 
-    public function components()
-    {
-        return $this->belongsToMany(Component::class, 'food_component');
-    }
+    protected $casts = [
+        'ingredients' => 'array',
+    ];
 
-    public function orders()
-    {
-        return $this->belongsToMany(Order::class, 'order_items');
-    }
+    // public function components()
+    // {
+    //     return $this->belongsToMany(Component::class, 'food_component');
+    // }
+
+    // public function orders()
+    // {
+    //     return $this->belongsToMany(Order::class, 'order_items');
+    // }
 }

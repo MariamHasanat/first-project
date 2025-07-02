@@ -20,8 +20,7 @@ class FoodResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'image' => $this->image,
-
-            'components' => ComponentResource::collection($this->whenLoaded('components')),
+            'ingredients' => $this->ingredients, // Assuming ingredients is a JSON field
         ];
 
 
